@@ -1,33 +1,25 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import db from './database'
 
-    const storeData = async (value) => {
-        try {
-            const jsonValue = JSON.stringify(value)
-            await AsyncStorage.setItem('Likes', jsonValue)
-          } catch (e) {
-            // saving error
-          }
-      }
-
-const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('Likes')
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch(e) {
-      // error reading value
-    }
+async function addLike(idParam){
+  try {
+    const docRef = await addDoc(collection(db, "likes"), {
+      id: {idParam}
+    });
+  } catch (e) {
+    console.error("Error adding document: ", e);
   }
-
-function RemoveImage(idParam){
-    removeValue = async () => {
-        try {
-          const remove = await AsyncStorage.removeItem('Likes', () => { AsyncStorage.getItem('Likes').map(item => item.id === idParam) })
-        } catch(e) {
-          // remove error
-        }
-      
-        console.log('Done.')
-      }
 }
 
-module.exports = {RemoveImage, storeData, getData};
+function removeLike(id){
+
+}
+
+async function getLikes(){
+  const likes = []
+  const querySnapshot = await getDocs(collection(db, "users"));
+  querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${doc.data()}`);
+  });
+}
+
+module.exports = (addLike, removeLike, getLikes);

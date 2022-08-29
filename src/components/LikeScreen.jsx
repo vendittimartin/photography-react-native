@@ -1,6 +1,5 @@
 import React from "react";
 import {RefreshControl, StyleSheet, SafeAreaView, ScrollView, Alert, Text, StatusBar} from "react-native";
-import {getData} from '../../Likes'
 import Publication from './Publication'
 
 const LikeScreen = () => {
@@ -16,8 +15,6 @@ const LikeScreen = () => {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-  const data = getData();
-
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView ScrollView style={styles.scrollView}
@@ -27,10 +24,7 @@ const LikeScreen = () => {
               onRefresh={onRefresh}
             />}>
               {
-                <Text> ID: {data.id} </Text>
-                /* data.map((item) => {
-                  return <Publication key={item.id} id={item.id} liked={item.liked}/>
-                }) */
+                <Text> ID: </Text>
               }
             </ScrollView>
         </SafeAreaView>
