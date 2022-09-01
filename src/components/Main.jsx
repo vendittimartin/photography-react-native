@@ -45,7 +45,7 @@ const Main = () => {
             key={e=> e}
             ref={ref}
             renderItem = {() => 
-              <Publication  id={Math.floor(Math.random() * 1040)} grayscale={state.grayscale} liked='heart-outline'/>    
+              <Publication  id={Math.floor(Math.random() * 1040)} blur={state.blur} grayscale={state.grayscale} liked='heart-outline'/>    
           }/>       
         </SafeAreaView>
     );

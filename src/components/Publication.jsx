@@ -23,11 +23,25 @@ const Publication = (props) => {
             {
                 props.grayscale ?
                 (
-                    <Image source={{uri:'https://picsum.photos/id/'+props.id+'/200/300?grayscale'}} style={style.image}/>
+                    props.blur > 0 ? 
+                    (
+                        <Image source={{uri:'https://picsum.photos/id/'+props.id+'/500/500?grayscale&blur='+props.blur}} style={style.image}/>
+                    )
+                    :
+                    (
+                        <Image source={{uri:'https://picsum.photos/id/'+props.id+'/500/500?grayscale'}} style={style.image}/>
+                    )
                 )
                 :
                 (
-                    <Image source={{uri:'https://picsum.photos/id/'+props.id+'/200/300'}} style={style.image}/>
+                    props.blur > 0 ?
+                    (
+                        <Image source={{uri:'https://picsum.photos/id/'+props.id+'/500/500?blur='+props.blur}} style={style.image}/>
+                    )
+                    :
+                    (
+                        <Image source={{uri:'https://picsum.photos/id/'+props.id+'/500/500'}} style={style.image}/>
+                    )
                 )
             }
             </TouchableHighlight>
