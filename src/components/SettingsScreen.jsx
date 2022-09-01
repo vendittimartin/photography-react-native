@@ -1,11 +1,19 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
+import {AppContext} from '../app/provider';
 
 const Settings = () => {
     
-    const [grayscale, setGrayscale] = useState(false);
+    const [state, setState] = useContext(AppContext);
     
-    const toggleSwitch = () => setGrayscale(previousState => !previousState);
+    const toggleSwitch = () => {
+        if (state.grayscale){
+            setState({...state, grayscale: false});
+        }
+        else{
+            setState({...state, grayscale: true});
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -13,10 +21,9 @@ const Settings = () => {
             <Switch 
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitch}
-            value={grayscale}
+            value={state.grayscale}
             style={styles.switch}
-            >
-            </Switch>
+            />
         </View>
     );
 }

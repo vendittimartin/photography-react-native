@@ -1,17 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import {RefreshControl, StyleSheet, SafeAreaView, ScrollView, StatusBar, View, FlatList} from "react-native";
 import Publication from './Publication'
 import { useScrollToTop } from '@react-navigation/native';
+import {AppContext} from '../app/provider'
 
 const Main = () => {
     const ref = React.useRef(null);
     const [refreshing, setRefreshing] = React.useState(false);
     const [id, setID] = React.useState(Math.floor(Math.random() * 1040));
     const [data, setDate] = useState([1,2,3,4,5]);
+    const [state, setState] = useContext(AppContext);
 
     useEffect(() => {
       fetchMore();
-    },[]);
+    },[]); 
 
     useScrollToTop(ref);
 
@@ -27,38 +29,24 @@ const Main = () => {
       });
     }, []);
 
-    const fetchMore = () => {
+      const fetchMore = () => {
       setDate(prevState => [
         ...prevState,
-        ...Array.from({length: 20}).map((_,i) => i + 1 + prevState.length),
+        ...Array.from({length: 5}).map((_,i) => i + 1 + prevState.length),
       ]);
-    }
-
+    }  
+    
     return (
         <SafeAreaView style={styles.container}>
-                <ScrollView
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />}
-                  ref={ref} ScrollView style={styles.scrollView}>
-                  {
-                    !refreshing?
-                    (
-                      <FlatList data={data} 
-                        onEndReached={fetchMore} 
-                        key={e=> e}
-                        renderItem = {() => 
-                          (<Publication id={Math.floor(Math.random() * 1040)} liked='heart-outline'/>) 
-                      }/>
-                    )
-                    :
-                    (
-                      <View></View>
-                    )
-                  }
-              </ScrollView>            
+          <FlatList data={data} 
+            //onEndReached={fetchMore} 
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            key={e=> e}
+            ref={ref}
+            renderItem = {() => 
+              <Publication  id={Math.floor(Math.random() * 1040)} grayscale={state.grayscale} liked='heart-outline'/>    
+          }/>       
         </SafeAreaView>
     );
 }

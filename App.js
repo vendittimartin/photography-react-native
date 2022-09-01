@@ -1,14 +1,12 @@
 import React from 'react';
 import Navigator from './Navigator'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Provider from './src/app/provider';
 
 export default function App() {
-  if (AsyncStorage.getItem('Likes') == null){
-    AsyncStorage.setItem('Likes', JSON.stringify([]));
-  }
   return (
-    <Navigator/>
+    <Provider>
+      <Navigator/>
+    </Provider>
   );
 }
 

@@ -1,26 +1,36 @@
 import React, {useState} from "react";
-import {View, Image, Alert} from "react-native";
+import {View, Image, Alert, TouchableHighlight} from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const Publication = (props) => {
     
     const [like, setLike] = useState(props.liked);
 
+    function conversor() {
+        if (props.grayscale){
+            return 'true'
+        }
+        else{
+            return 'false'
+        }
+    }
+
     return (
     <View style={style.view}>
         <View style={style.viewImage}> 
             </View>
-            <Image
-            source={{
-                uri: 'https://picsum.photos/id/'+props.id+'/410/340'}}
-            onError={() => {
-                <Image
-                source={{
-                    uri: 'https://www.publicdomainpictures.net/pictures/280000/nahled/not-found-image-15383864787lu.jpg'}}
-                style={style.image}
-                />
-            }}
-            style={style.image}/>
+            <TouchableHighlight onPress={() => {Alert.alert(conversor())}}>
+            {
+                props.grayscale ?
+                (
+                    <Image source={{uri:'https://picsum.photos/id/'+props.id+'/200/300?grayscale'}} style={style.image}/>
+                )
+                :
+                (
+                    <Image source={{uri:'https://picsum.photos/id/'+props.id+'/200/300'}} style={style.image}/>
+                )
+            }
+            </TouchableHighlight>
 
             <View style={style.viewLike}>
             <Ionicons onPress={() => {
