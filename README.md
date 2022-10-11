@@ -6,10 +6,10 @@ Or you can configure some settings like blur or grayscale
 Scroll infinitely thanks to picsum photos API.
 
 ### Main menu
-![Imgur](https://i.imgur.com/qwnm8mT.jpg)
+![Imgur](https://i.imgur.com/qwnm8mTl.jpg)
 
 ### With grayscale enabled
-![Imgur](https://i.imgur.com/btgwvOk.jpg)
+![Imgur](https://i.imgur.com/btgwvOkl.jpg)
 
 ### With both (grayscale and blur)
 ![Imgur](https://i.imgur.com/3lQYwaDl.jpg)
