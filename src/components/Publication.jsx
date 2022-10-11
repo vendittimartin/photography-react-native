@@ -1,25 +1,15 @@
 import React, {useState} from "react";
-import {View, Image, Alert, TouchableHighlight} from "react-native";
+import {View, Image, Alert} from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const Publication = (props) => {
     
     const [like, setLike] = useState(props.liked);
 
-    function conversor() {
-        if (props.grayscale){
-            return 'true'
-        }
-        else{
-            return 'false'
-        }
-    }
-
     return (
     <View style={style.view}>
         <View style={style.viewImage}> 
             </View>
-            <TouchableHighlight onPress={() => {Alert.alert(conversor())}}>
             {
                 props.grayscale ?
                 (
@@ -44,17 +34,30 @@ const Publication = (props) => {
                     )
                 )
             }
-            </TouchableHighlight>
-
             <View style={style.viewLike}>
-            <Ionicons onPress={() => {
-                if (like === 'heart-outline') {
-                    setLike('heart-sharp');
-                } else {
-                    setLike('heart-outline');
-                }
-            }}
-                style={style.iconLike} name={like}  size={30}/>
+            {
+                like === 'heart-outline' ?
+                (
+                <Ionicons onPress={() => {
+                    if (like === 'heart-outline') {
+                        setLike('heart-sharp');
+                    } else {
+                        setLike('heart-outline');
+                }}}
+                style={style.iconLike} name={'heart-sharp'}  size={30}/>
+                )
+                :
+                (
+                    <Ionicons onPress={() => {
+                        if (like === 'heart-outline') {
+                            setLike('heart-sharp');
+                        } else {
+                            setLike('heart-outline');
+                        }
+                    }}
+                    style={style.iconLike} name={'heart-outline'}  size={30}/>
+                )
+            }
             <Ionicons style={style.iconDownload} name='download-outline' size={30}/>
         </View>
     </View>

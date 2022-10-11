@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useContext} from "react";
-import {RefreshControl, StyleSheet, SafeAreaView, ScrollView, StatusBar, View, FlatList} from "react-native";
+import React, { useState, useContext} from "react";
+import {StyleSheet, SafeAreaView, StatusBar, FlatList} from "react-native";
 import Publication from './Publication'
 import { useScrollToTop } from '@react-navigation/native';
 import {AppContext} from '../app/provider'
@@ -7,13 +7,9 @@ import {AppContext} from '../app/provider'
 const Main = () => {
     const ref = React.useRef(null);
     const [refreshing, setRefreshing] = React.useState(false);
-    const [id, setID] = React.useState(Math.floor(Math.random() * 1040));
-    const [data, setDate] = useState([1,2,3,4,5]);
+    const [data, setDate] = useState();
     const [state, setState] = useContext(AppContext);
-
-    useEffect(() => {
-      fetchMore();
-    },[]); 
+    const [page, setPage] = useState(1);
 
     useScrollToTop(ref);
 
@@ -25,28 +21,34 @@ const Main = () => {
       setRefreshing(true);
       wait(2000).then(() => {
         setRefreshing(false);
-        setID(Math.floor(Math.random() * 1040));
       });
     }, []);
 
-      const fetchMore = () => {
-      setDate(prevState => [
-        ...prevState,
-        ...Array.from({length: 5}).map((_,i) => i + 1 + prevState.length),
-      ]);
-    }  
+    const fetchMore = () => {
+      setPage(page+1);
+      setDate([...data, getData(page)])
+    }
     
+    const getData = (paramID) => {
+      fetch('https://picsum.photos/v2/list?page='+paramID+'&limit=10')
+      .then(result => result.json())
+      .then((output) => {
+          setDate(output)
+      }).catch(err => console.error(err));
+    } 
+    getData(page)
+
     return (
         <SafeAreaView style={styles.container}>
           <FlatList data={data} 
-            //onEndReached={fetchMore} 
+            onEndReached={fetchMore} 
             refreshing={refreshing}
             onRefresh={onRefresh}
-            key={e=> e}
+            key={(item) => item.id}
             ref={ref}
-            renderItem = {() => 
-              <Publication  id={Math.floor(Math.random() * 1040)} blur={state.blur} grayscale={state.grayscale} liked='heart-outline'/>    
-          }/>       
+            renderItem = {({item,index}) => 
+              <Publication id={item.id} blur={state.blur} grayscale={state.grayscale} liked={'heart-outline'}/>    
+          }/> 
         </SafeAreaView>
     );
 }
