@@ -12,4 +12,4 @@ Scroll infinitely thanks to picsum photos API.
 ![Imgur](https://i.imgur.com/btgwvOk.jpg)
 
 ### With both (grayscale and blur)
-![Imgur](https://i.imgur.com/3lQYwaDm.jpg)
+![Imgur](https://i.imgur.com/3lQYwaDl.jpg)
